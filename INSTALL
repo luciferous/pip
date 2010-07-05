@@ -1,0 +1,28 @@
+Now that you have pip downloaded, you can simply include or require it in your
+applications. Two methods to do this are listed below.
+
+1. Modify your php.ini
+
+  Look for the line include_path='.:/usr/lib/php' and change it to
+  include_path='.:/usr/lib/php:{path to pip folder}'.
+
+2. Run your PHP with -d include_path.
+
+  $ php -d include_path='{path to pip folder}' myapp.php
+
+3. Copy pip into your project directory.
+
+  If you want to run myapp.php, make sure your directory looks like this:
+
+  ./
+    myapp.php
+    ...
+    otherfiles.php
+    public/
+    pip/
+      base.php
+      io.php
+      webapp.php
+      ...
+
+  Then you can simply require 'pip/webapp.php' in myapp.php.
