@@ -105,9 +105,8 @@ class Http extends pip\base\SocketServer {
       $buf .= $conn->recv();
       if (false === ($end = strpos($buf, "\r\n\r\n"))) continue;
       $request = parse_request(substr($buf, 0, $end));
-      if ('' == ($bleed = substr($buf, $end + 4))) {
-        fwrite($env['pip.input'], $bleed);
-      }
+      // Write any extra bytes left over to pip.input
+      fwrite($env['pip.input'], substr($buf, $end + 4));
     }
     _init_environment($env, $request);
 
