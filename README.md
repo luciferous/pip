@@ -16,23 +16,23 @@ hello.php
 
     <?php
 
-    use pip;
+    require 'pip/http.php';
     require 'pip/webapp.php';
 
-    class HelloWorld extends webapp\RequestHandler {
+    class HelloWorld extends pip\webapp\RequestHandler {
       function get() {
         $this->response->content_type = 'text/plain';
         fwrite($this->response, 'Hello, world!');
       }
     }
 
-    $app = new webapp\PipApp(array(
-      ('/', 'HelloWorld'),
+    $app = new pip\webapp\PipApplication(array(
+      array('/', 'HelloWorld'),
     ));
 
     if (!debug_backtrace()) {
-      $server = new servers\Http($app);
-      $server->start();
+      $server = new pip\servers\Http();
+      $server->start($app);
     }
 
 Run in a shell.
