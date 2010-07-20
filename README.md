@@ -5,7 +5,11 @@ Pip (or Phillip Pirrip) is the main character from the Charles Dickens novel
 _Great Expectations_, who leaves his life as a blacksmith's apprentice and
 goes to London to become a gentleman.
 
-Pip is also the name of a pure PHP web server.
+Pip is also the name of a web development bundle containing the following:
+
+- a pure PHP web server inspired by Unicorn
+- a web server interface specification inspired by Rack and WSGI
+- a framework inspired by Pylons and Google App Engine
 
 Getting Started With Pip
 ------------------------
@@ -53,13 +57,16 @@ See INSTALL for instructions on installing.
 Bugs
 ----
 
-A lot.
+A lot (probably).
 
 To Do
 -----
 
 - Change HTTP parser (looking at antlr3 and PECL's HTTP parser)
 - Populate PHP superglobals (e.g. $_POST, $_SERVER) when rendering PHP
+- Make more PHP-ish
+- Convert tests to PHPUnit
+- Experiment with using an output buffering callback for chunked transfer
 
 Contact
 -------
