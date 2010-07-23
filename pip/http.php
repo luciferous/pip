@@ -101,7 +101,6 @@ class Http extends pip\base\SocketServer {
     $buf = '';
     $request = NULL;
     while (is_null($request)) {
-      if (!$conn->can_read()) continue;
       $buf .= $conn->recv();
       if (false === ($end = strpos($buf, "\r\n\r\n"))) continue;
       $request = parse_request(substr($buf, 0, $end));
@@ -115,7 +114,6 @@ class Http extends pip\base\SocketServer {
     $bytes_left -= $stat[7];
     while ($bytes_left > 0) {
       logging\debug("$bytes_left bytes left");
-      if (!$conn->can_read()) continue;
       $buf = $conn->recv();
       $bytes_left -= fwrite($env['pip.input'], $buf);
     }

@@ -106,7 +106,6 @@ class Listener extends Socket {
 class Connection extends Socket {
   function __construct($socket) {
     $this->socket = $socket;
-    socket_set_nonblock($this->socket);
   }
 
   /**
@@ -130,14 +129,13 @@ class Connection extends Socket {
   /**
    * Wrapper for socket_recv().
    */
-  function recv() {
-    $len = socket_recv($this->socket, $data, RECVBUF, MSG_DONTWAIT);
-    if (false === $len) {
+  function recv($len = RECVBUF, $flags = NULL) {
+    $bytes = socket_recv($this->socket, $data, $len, $flags);
+    if (0 === $bytes) throw new ConnectionClosed();
+    if (false === $bytes) {
       $code = $this->error();
-      logging\error($code);
       throw new SocketError(socket_strerror($code), $code);
     }
-    else if ($data == '') throw new ConnectionClosed();
     return $data;
   }
 
