@@ -45,12 +45,18 @@ class SocketServer extends io\Listener {
     _init_signals($this);
 
     $this->maintain_worker_count();
+    $last_check = time();
     while (!$done) {
       pcntl_signal_dispatch();
       $this->reap_all_workers();
       switch (array_shift($this->sigqueue)) {
       case NULL:
-        $this->master_sleep($this->opt['timeout'] / 2 + 1);
+        if (($last_check + $this->opt['timeout']) >= ($last_check = time())) {
+          $this->murder_lazy_workers();
+        }
+        else {
+          $this->master_sleep($this->opt['timeout'] / 2 + 1);
+        }
         $this->maintain_worker_count();
         $this->master_sleep(1);
         break;
@@ -149,6 +155,7 @@ class SocketServer extends io\Listener {
         if (is_resource($client)) {
           $this->process_client($client);
         }
+        ftruncate($this->alive, 0);
       } catch (ErrorException $e) {
         $this->logger->error($e->getTraceAsString());
       }
@@ -211,6 +218,18 @@ class SocketServer extends io\Listener {
       return $balance > 0 ?
         $this->downsize_workers() :
         $this->spawn_missing_workers();
+    }
+  }
+
+  function murder_lazy_workers() {
+    foreach ($this->workers as $wpid => $worker) {
+      $stat = fstat($worker->tmp);
+      if (($diff = (time() - $stat['ctime'])) <= $this->opt['timeout']) continue;
+      $this->logger->info(
+        "worker=$worker->nr PID:$wpid timeout "
+        . "({$diff}s > {$this->opt['timeout']}s), killing"
+      );
+      posix_kill($wpid, SIGKILL);
     }
   }
 
