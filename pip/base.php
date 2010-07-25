@@ -88,7 +88,7 @@ class SocketServer extends io\Listener {
     if (count($reads) == 0) return;
     $first = current($reads);
     while (TRUE) {
-      if (FALSE === @socket_recv($first, $data, CHUNKSIZE, MSG_DONTWAIT)) {
+      if (FALSE === @socket_recv($first, $data, io\RECVBUF, MSG_DONTWAIT)) {
         $err = socket_last_error($first);
         $this->logger->debug(socket_strerror($err));
         if ($err === SOCKET_EAGAIN or $err === SOCKET_EINTR) break;
