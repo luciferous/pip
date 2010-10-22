@@ -47,13 +47,15 @@ if (count(debug_backtrace()) == 0) {
   $logger->level = logging\DEBUG;
   $http = new servers\Http(array(
     'iface' => 'localhost',
-    'port' => 5000));
+    'port' => 5000,
+    'workers' => 4,
+    'timeout' => 5));
 
   // Show off some middleware
   require_once 'pip/middleware/commonlogger.php';
-  $http->apps[] = 'CommonLogger';
+  //$http->apps[] = 'CommonLogger';
   require_once 'pip/middleware/staticfiles.php';
-  $http->apps[] = array('StaticFiles', getcwd() . '/public');
+  //$http->apps[] = array('StaticFiles', getcwd() . '/public');
 
   $http->start($app);
 }

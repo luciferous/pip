@@ -106,6 +106,7 @@ class Listener extends Socket {
 class Connection extends Socket {
   function __construct($socket) {
     $this->socket = $socket;
+    socket_set_block($this->socket);
   }
 
   /**

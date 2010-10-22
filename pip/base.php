@@ -148,7 +148,7 @@ class SocketServer extends io\Listener {
         if ($number <= 0) continue;
         if (FALSE === ($client = @socket_accept($this->socket))) {
           $err = socket_last_error();
-          $this->logger->debug(socket_strerror($err));
+          //$this->logger->debug(socket_strerror($err));
           if ($err === SOCKET_EAGAIN or $err === SOCKET_ECONNABORTED) continue;
           throw new SocketError(socket_strerror($err));
         }
