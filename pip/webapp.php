@@ -74,7 +74,7 @@ class Request {
         isset($this->POST[$key])
         ? $this->POST[$key]
         : $null
-      ); 
+      );
   }
 
   private function parseDict(&$dict, $qs) {

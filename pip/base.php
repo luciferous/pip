@@ -176,7 +176,7 @@ class SocketServer extends io\Listener {
       $worker->tmp = _tmpio();
       $pid = pcntl_fork();
       if ($pid == -1) {
-        $this->logger->info('failed to fork worker'); 
+        $this->logger->info('failed to fork worker');
       }
       else if ($pid == 0) $this->worker_loop($worker);
       else $this->workers[$pid] = $worker;

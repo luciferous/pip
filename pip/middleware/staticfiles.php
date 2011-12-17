@@ -49,6 +49,6 @@ class StaticFiles {
     $headers['content-type'] = self::_mimeType(
       pathinfo($filename, PATHINFO_EXTENSION));
     fclose($src);
-    return array(200, $headers, $body); 
+    return array(200, $headers, $body);
   }
 }

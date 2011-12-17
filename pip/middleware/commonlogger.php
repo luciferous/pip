@@ -25,6 +25,6 @@ class CommonLogger {
         $now - $time,
       )
     );
-    return array($status, $headers, $body); 
+    return array($status, $headers, $body);
   }
-} 
+}
