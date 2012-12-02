@@ -134,12 +134,12 @@ class Http extends pip\base\SocketServer {
 
     $lines = array();
     foreach ($headers as $key => $value) {
-      $lines[] = "$key: $value\r\n";
+      $lines[] = "$key: $value";
     }
 
     rewind($body);
     $out = sprintf(HTTP_RESPONSE, $status, Http::$phrase[$status],
-      gmdate('D, d M Y H:i:s', time()), implode('', $lines));
+      gmdate('D, d M Y H:i:s', time()), implode("\r\n", $lines));
 
     if ($conn->can_write()) $conn->write($out);
 
