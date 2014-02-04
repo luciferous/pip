@@ -61,7 +61,7 @@ Logger::$root = new Logger('root', new StreamHandler());
 
 function basicConfig($level = INFO) {
   $logger = Logger::$root;
-  $logger->level = $level; 
+  $logger->level = $level;
 }
 
 function getLogger($name) {
@@ -75,7 +75,7 @@ function getLogger($name) {
 
 function info($message) { _log(__FUNCTION__, $message); }
 function debug($message) { _log(__FUNCTION__, $message); }
-function warning($message) { _log(__FUNCTION__, $message); } 
+function warning($message) { _log(__FUNCTION__, $message); }
 function error($message) { _log(__FUNCTION__, $message); }
 function critical($message) { _log(__FUNCTION__, $message); }
 

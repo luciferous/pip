@@ -22,6 +22,6 @@ class PhpFiles {
     $headers['content-length'] = $len;
     $headers['content-type'] = 'text/html';
     fclose($src);
-    return array(200, $headers, $body); 
+    return array(200, $headers, $body);
   }
 }
